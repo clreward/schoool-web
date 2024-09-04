@@ -1,0 +1,120 @@
+<div id="registerStudent">
+    <h4>Register Student</h4>
+    <form action="register_student.php" method="POST" enctype="multipart/form-data">
+        <!-- Registration Number -->
+        <div class="form-group">
+            <label for="regNumber">Registration Number</label>
+            <input type="text" class="form-control" id="regNumber" name="registration_number" maxlength="20" required>
+        </div>
+
+        <!-- First Name -->
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="first_name" maxlength="50" required>
+        </div>
+
+        <!-- Middle Name -->
+        <div class="form-group">
+            <label for="middleName">Middle Name</label>
+            <input type="text" class="form-control" id="middleName" name="middle_name" maxlength="50">
+        </div>
+
+        <!-- Surname -->
+        <div class="form-group">
+            <label for="surname">Surname</label>
+            <input type="text" class="form-control" id="surname" name="surname" maxlength="50" required>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select class="form-control" id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+        </div>
+
+        <!-- Age -->
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" class="form-control" id="age" name="age" required>
+        </div>
+
+        <!-- Address Region -->
+        <div class="form-group">
+            <label for="addressRegion">Address Region</label>
+            <input type="text" class="form-control" id="addressRegion" name="address_region" maxlength="50" required>
+        </div>
+
+        <!-- Address District -->
+        <div class="form-group">
+            <label for="addressDistrict">Address District</label>
+            <input type="text" class="form-control" id="addressDistrict" name="address_district" maxlength="50" required>
+        </div>
+
+        <!-- Address Ward -->
+        <div class="form-group">
+            <label for="addressWard">Address Ward</label>
+            <input type="text" class="form-control" id="addressWard" name="address_ward" maxlength="50" required>
+        </div>
+
+        <!-- Address Village -->
+        <div class="form-group">
+            <label for="addressVillage">Address Village</label>
+            <input type="text" class="form-control" id="addressVillage" name="address_village" maxlength="50" required>
+        </div>
+
+        <!-- Address Street -->
+        <div class="form-group">
+            <label for="addressStreet">Address Street</label>
+            <input type="text" class="form-control" id="addressStreet" name="address_street" maxlength="50" required>
+        </div>
+
+        <!-- Allergies -->
+        <div class="form-group">
+            <label for="alleges">Allergies</label>
+            <select class="form-control" id="alleges" name="alleges" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <!-- Disorder -->
+        <div class="form-group">
+            <label for="disorder">Disorder</label>
+            <select class="form-control" id="disorder" name="disorder" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <!-- Disorder Details -->
+        <div class="form-group">
+            <label for="disorderDetails">Disorder Details</label>
+            <textarea class="form-control" id="disorderDetails" name="disorder_details" rows="3"></textarea>
+        </div>
+
+        <!-- Form Level -->
+        <div class="form-group">
+            <label for="formLevel">Form Level</label>
+            <select class="form-control" id="formLevel" name="form" required>
+                <option value="">Select Form</option>
+                <option value="1">Form 1</option>
+                <option value="2">Form 2</option>
+                <option value="3">Form 3</option>
+                <option value="4">Form 4</option>
+                <option value="5">Form 5</option>
+                <option value="6">Form 6</option>
+            </select>
+        </div>
+
+        <!-- Profile Photo Upload -->
+        <div class="form-group">
+            <label for="profilePhoto">Profile Photo</label>
+            <input type="file" class="form-control-file" id="profilePhoto" name="profile_photo" accept="image/*" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register Student</button>
+    </form>
+</div>
