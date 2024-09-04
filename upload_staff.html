@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Staff Information</title>
+    <link rel="stylesheet" href="path/to/bootstrap.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Upload Staff Information</h2>
+        <form action="upload_staff_process.php" method="POST" enctype="multipart/form-data">
+            <!-- Staff Registration Number -->
+            <div class="form-group">
+                <label for="staffRegistrationNumber">Staff Registration Number</label>
+                <input type="text" class="form-control" id="staffRegistrationNumber" name="staff_registration_number" maxlength="20" required>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="Administrator">Administrator</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Treasurer">Treasurer</option>
+                    <option value="Student">Student</option>
+                    <option value="Patron">Patron</option>
+                    <option value="Matron">Matron</option>
+                    <option value="Second Master">Second Master</option>
+                    <option value="Head Master">Head Master</option>
+                    <option value="Teacher on Duty">Teacher on Duty</option>
+                </select>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" maxlength="255" required>
+            </div>
+
+            <!-- First Name -->
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="first_name" maxlength="50" required>
+            </div>
+
+            <!-- Middle Name -->
+            <div class="form-group">
+                <label for="middleName">Middle Name</label>
+                <input type="text" class="form-control" id="middleName" name="middle_name" maxlength="50">
+            </div>
+
+            <!-- Surname -->
+            <div class="form-group">
+                <label for="surname">Surname</label>
+                <input type="text" class="form-control" id="surname" name="surname" maxlength="50" required>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select class="form-control" id="gender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
+            </div>
+
+            <!-- Age -->
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" name="age" required>
+            </div>
+
+            <!-- Address Region -->
+            <div class="form-group">
+                <label for="addressRegion">Address Region</label>
+                <input type="text" class="form-control" id="addressRegion" name="address_region" maxlength="50" required>
+            </div>
+
+            <!-- Address District -->
+            <div class="form-group">
+                <label for="addressDistrict">Address District</label>
+                <input type="text" class="form-control" id="addressDistrict" name="address_district" maxlength="50" required>
+            </div>
+
+            <!-- Address Ward -->
+            <div class="form-group">
+                <label for="addressWard">Address Ward</label>
+                <input type="text" class="form-control" id="addressWard" name="address_ward" maxlength="50" required>
+            </div>
+
+            <!-- Address Village -->
+            <div class="form-group">
+                <label for="addressVillage">Address Village</label>
+                <input type="text" class="form-control" id="addressVillage" name="address_village" maxlength="50" required>
+            </div>
+
+            <!-- Address Street -->
+            <div class="form-group">
+                <label for="addressStreet">Address Street</label>
+                <input type="text" class="form-control" id="addressStreet" name="address_street" maxlength="50" required>
+            </div>
+
+            <!-- Alleged -->
+<div class="form-group">
+    <label for="alleges">Alleges</label>
+    <div>
+        <label><input type="radio" name="alleges" value="1" required> Yes</label>
+        <label><input type="radio" name="alleges" value="0"> No</label>
+    </div>
+</div>
+
+<!-- Disorder -->
+<div class="form-group">
+    <label for="disorder">Disorder</label>
+    <div>
+        <label><input type="radio" name="disorder" value="1" required> Yes</label>
+        <label><input type="radio" name="disorder" value="0"> No</label>
+    </div>
+</div>
+
+            <!-- Disorder Details -->
+            <div class="form-group">
+                <label for="disorderDetails">Disorder Details</label>
+                <textarea class="form-control" id="disorderDetails" name="disorder_details"></textarea>
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="number" class="form-control" id="phone" name="phone" maxlength="15" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" maxlength="100" required>
+            </div>
+
+            <!-- Relationship -->
+            <div class="form-group">
+                <label for="relationship">Relationship</label>
+                <input type="text" class="form-control" id="relationship" name="relationship" maxlength="50" required>
+            </div>
+
+            <!-- Marital Status -->
+            <div class="form-group">
+                <label for="maritalStatus">Marital Status</label>
+                <input type="text" class="form-control" id="maritalStatus" name="marital_status" maxlength="50" required>
+            </div>
+
+            <!-- NIDA Number -->
+            <div class="form-group">
+                <label for="nidaNumber">NIDA Number</label>
+                <input type="number" class="form-control" id="nidaNumber" name="nida_number" maxlength="20" required>
+            </div>
+
+            <!-- Profile Photo -->
+            <div class="form-group">
+                <label for="profilePhoto">Profile Photo</label>
+                <input type="file" class="form-control" id="profilePhoto" name="profile_photo" accept="image/*" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Upload Staff Information</button>
+        </form>
+    </div>
+
+    <!-- Include your JavaScript files here -->
+    <script src="path/to/bootstrap.js"></script>
+</body>
+</html>
