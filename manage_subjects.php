@@ -3,7 +3,7 @@
 include('db_connection.php');
 session_start();
 
-// Check if the user is logged in and has the Academic role
+// Check if the user is logged in and has the Academic roles 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['role'] !== 'Academic') {
     header("Location: login.php");
     exit;
