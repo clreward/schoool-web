@@ -19,6 +19,9 @@
             <option value="4">Form 4</option>
             <option value="5">Form 5</option>
             <option value="6">Form 6</option>
+            <option value="1">O-Level</option>
+            <option value="0">A-Level</option>
+            
         </select><br><br>
 
         <input type="submit" value="Submit">

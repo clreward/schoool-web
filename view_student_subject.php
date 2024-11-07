@@ -1,4 +1,40 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>studentss subjects</title>
+</head>
+<style>
+        body{
+            background-color: rgb(240, 240, 240);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .assign-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .assign-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+<body>
+    <h1>Students Subjects</h1>
+
+    <?php
 // Include necessary files and initialize session
 include('db_connection.php');
 session_start();
@@ -32,15 +68,13 @@ foreach ($form_levels as $form_level) {
     if (count($students) > 0) {
         $count = 1;
         echo "<table border='1'>";
-        echo "<thead><tr><th>S/N</th><th>Registration Number</th><th>First Name</th><th>Middle Name</th><th>Surname</th><th>Gender</th><th>Subjects</th></tr></thead>";
+        echo "<thead><tr><th>S/N</th><th>Registration Number</th><th>Names</th><th>Gender</th><th>Subjects</th></tr></thead>";
         echo "<tbody>";
         foreach ($students as $student) {
             echo "<tr>";
             echo "<td>" . $count++ . "</td>";
             echo "<td>" . htmlspecialchars($student['registration_number']) . "</td>";
-            echo "<td>" . htmlspecialchars($student['first_name']) . "</td>";
-            echo "<td>" . htmlspecialchars($student['middle_name']) . "</td>";
-            echo "<td>" . htmlspecialchars($student['surname']) . "</td>";
+            echo "<td>" . htmlspecialchars($student['first_name'] . '.  ' . $student['middle_name'] . '.  ' . $student['surname']). "</td>";
             echo "<td>" . htmlspecialchars($student['gender']) . "</td>";
             echo "<td>" . htmlspecialchars($student['subjects']) . "</td>";
             echo "</tr>";
@@ -54,3 +88,9 @@ foreach ($form_levels as $form_level) {
 // Close database connection
 $conn->close();
 ?>
+
+</body>
+</html>
+
+
+

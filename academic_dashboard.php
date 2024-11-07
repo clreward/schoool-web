@@ -1,5 +1,5 @@
 <?php
-// Include necessary files and initialize session.
+// Include necessary files and initialize session
 include('db_connection.php');
 session_start();
 
@@ -9,17 +9,27 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
-// Fetch user details
+// Fetch user details and role
 $user_id = $_SESSION['user_id'];
-$query = "SELECT first_name, middle_name, surname, staff_registration_number,  profile_photo FROM staff WHERE staff_registration_number = ?";
+$query = "
+    SELECT 
+        staff.first_name, 
+        staff.middle_name, 
+        staff.surname, 
+        staff.staff_registration_number, 
+        staff.image_data, 
+        staff.image_name,  /* Assuming image_name holds the image filename or description */
+        user_login.role 
+    FROM staff 
+    JOIN user_login 
+    ON staff.staff_registration_number = user_login.staff_registration_number 
+    WHERE staff.staff_registration_number = ?";
 
+// Prepare and execute the query
 $stmt = $conn->prepare($query);
-
-// Check if preparation was successful
 if ($stmt === false) {
     die("Failed to prepare the SQL statement: " . $conn->error);
 }
-
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
@@ -27,6 +37,14 @@ $user = $stmt->get_result()->fetch_assoc();
 if ($user === null) {
     die("Failed to fetch user details or no user found.");
 }
+
+$role = $user['role']; // Store the role for later use
+$image_data = $user['image_data']; // Image stored in the database as BLOB
+$image_name = $user['image_name']; // Image name
+
+// Convert BLOB image data to base64
+$base64_image = base64_encode($image_data);
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +52,7 @@ if ($user === null) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Dashboard</title>
+    <title><?php echo ucfirst($role); ?> Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -86,7 +104,8 @@ if ($user === null) {
             border-radius: 5px;
         }
         .user-info img {
-            width: 50px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             vertical-align: middle;
             margin-right: 10px;
@@ -107,28 +126,53 @@ if ($user === null) {
 
     <div class="sidebar">
         <h3>Menu</h3>
-        <a href="view_students.php">View Students</a>
-        <a href="view_student_subject.php">View Students_subjects</a>
-        <a href="register_students.php">Register Students</a>
-        <a href="add_subjects.php">Assign Subjects</a>
-        <a href="add_subject.php">Add subject</a>
-        <a href="view_teachers.php">View Teachers</a>
-        <a href="assign_classes.php">Assign Classes & Subjects</a>
-        <a href="view_results.php">View Uploaded Results</a>
-        <a href="upload_results.php">Upload Results</a>
-        <a href="view_permitted_students.php">View Permitted Students</a>
-        <a href="logout.php">Logout</a>
+        <?php if ($role == 'Administrator') { ?>
+            <a href="view_students.php">View Students</a>
+            <a href="register_students.php">Register Students</a>
+            <a href="register_staff.php">Register Staff</a>
+            <a href="upload_profile_photo.php">Upload Staff Profile Photo</a>
+            <a href="upload_student_profile_photo.php">Upload Student Profile Photo</a>
+            <!-- Add more Administrator options -->
+        <?php } elseif ($role == 'Academic') { ?>
+            <a href="view_student_subject.php">View Students</a>
+            <a href="##">Register Students**</a>
+            <a href="view_students.php">Assign Subjects</a>
+            <a href="add_subject.php">Add subject</a>
+            <a href="academic_view_teachers.php">View Teachers</a>
+            <a href="academic_view_teacher_assignments.php">View Teachers Assignments</a>
+            <a href="result_notification.php">Result Notification</a>
+            <!-- <a href="view_results.php">View Uploaded Results</a> -->
+            <a href="view_form_results.php">View Results</a>
+            <a href="#">Upload Results</a>
+            <a href="#">View Permitted Students</a>
+        <?php } elseif ($role == 'Teacher') { ?>
+            <a href="teacher_view_assignments.php">View Assigned Classes</a>
+            <a href="teacher_add_marks.php">Add Marks</a>
+            <a href="edit_marks.php">Edit Marks</a>
+            <!-- Add more Teacher options -->
+        <?php } elseif ($role == 'Treasurer') { ?>
+            <a href="view_payments.php">View Payments</a>
+            <a href="print_receipt.php">Print Receipt</a>
+            <!-- Add more Treasurer options -->
+        <?php } elseif ($role == 'Student') { ?>
+            <a href="view_results.php">View Results</a>
+            <a href="view_payments.php">View Payment Information</a>
+            <a href="send_message.php">Send Message</a>
+            <!-- Add more Student options -->
+        <?php } ?>
+        
+        <a href="login.php">Logout</a>
     </div>
 
     <div class="content">
         <div class="user-info">
-            <img src="<?php echo $user['profile_photo']; ?>" alt="Profile Photo">
+            <!-- Display the profile photo from the base64-encoded image data -->
+            <img src="data:image/jpeg;base64,<?php echo $base64_image; ?>" alt="<?php echo $image_name; ?>">
             <h2><?php echo $user['first_name'] . ' ' . $user['middle_name'] . ' ' . $user['surname']; ?></h2>
             <p>Registration Number: <?php echo $user['staff_registration_number']; ?></p>
-            <!-- <p>Role: <?php echo ucfirst($user['role']); ?></p> -->
+            <p>Role: <?php echo ucfirst($role); ?></p>
         </div>
 
-        <!-- <h2>Welcome to your dashboard, <?php echo ucfirst($user['role']); ?>!</h2> -->
         <p>Use the menu on the left to navigate through the system functionalities.</p>
     </div>
 
