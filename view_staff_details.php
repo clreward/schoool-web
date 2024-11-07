@@ -40,7 +40,6 @@ if ($staff_id) {
     <p><strong>Street:</strong> <?php echo htmlspecialchars($staff['address_street']); ?></p>
     <p><strong>Phone:</strong> <?php echo htmlspecialchars($staff['phone']); ?></p>
     <p><strong>Email:</strong> <?php echo htmlspecialchars($staff['email']); ?></p>
-    <p><strong>Relationship:</strong> <?php echo htmlspecialchars($staff['relationship']); ?></p>
     <p><strong>Marital Status:</strong> <?php echo htmlspecialchars($staff['marital_status']); ?></p>
     <p><strong>NIDA Number:</strong> <?php echo htmlspecialchars($staff['nida_number']); ?></p>
     <p><strong>Profile Photo:</strong> <img src="data:image/jpeg;base64,<?php echo base64_encode($staff['profile_photo']); ?>" alt="Profile Photo"></p>

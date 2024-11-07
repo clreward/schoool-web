@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Execute the statement
         if ($stmt->execute()) {
-            header("Location: user_login.php");
+            header("Location: admin_dashboard.php");
             // echo "Next of Kin information has been registered successfully.";
         } else {
             echo "Error: " . $stmt->error;

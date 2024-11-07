@@ -50,8 +50,8 @@ $staff_registration_number = isset($_GET['staff_registration_number']) ? htmlspe
 
             <!-- Age -->
             <div class="form-group">
-                <label for="age">Age</label>
-                <input type="number" class="form-control" id="age" name="age" required>
+                <label for="age">Date of Birth</label>
+                <input type="date" class="form-control" id="age" name="age" required>
             </div>
 
             <!-- Address Region -->
@@ -93,14 +93,23 @@ $staff_registration_number = isset($_GET['staff_registration_number']) ? htmlspe
             <!-- Relationship -->
             <div class="form-group">
                 <label for="relationship">Relationship</label>
-                <input type="text" class="form-control" id="relationship" name="relationship" maxlength="50" required>
+                <select class="form-control" id="relationship" name="relationship" required>
+                    <option value="Parent">Parent</option>
+                    <option value="Guardiad">Guardiad</option>
+                    <option value="Neighbor">Neighbor</option>
+                    <option value="Other">Other</option>
+                </select>
             </div>
 
             <!-- Marital Status -->
             <div class="form-group">
                 <label for="maritalStatus">Marital Status</label>
-                <input type="text" class="form-control" id="maritalStatus" name="marital_status" maxlength="50">
-            </div>
+                <select class="form-control" id="maritalStatus" name="marital_status" required>
+                    <option value="Maried">Maried</option>
+                    <option value="Single">Single</option>
+                    <option value="Divorced">Divorced</option>
+                </select>
+            
 
             <!-- NIDA Number -->
             <div class="form-group">

@@ -7,6 +7,30 @@
             <input type="text" class="form-control" id="regNumber" name="registration_number" maxlength="20" required>
         </div>
 
+        <!-- Role -->
+          <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    <!-- <option value="Administrator">Administrator</option>
+                    <option value="Academic">Academic</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Treasurer">Treasurer</option> -->
+                    <option value="Student">Student</option>
+                    <!-- <option value="Patron">Patron</option>
+                    <option value="Matron">Matron</option>
+                    <option value="Second Master">Second Master</option>
+                    <option value="Head Master">Head Master</option>
+                    <option value="Teacher on Duty">Teacher on Duty</option> -->
+                </select>
+            </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" maxlength="255" required>
+        </div>
+
         <!-- First Name -->
         <div class="form-group">
             <label for="firstName">First Name</label>
@@ -37,8 +61,8 @@
 
         <!-- Age -->
         <div class="form-group">
-            <label for="age">Age</label>
-            <input type="number" class="form-control" id="age" name="age" required>
+            <label for="age">Dte of Birth</label>
+            <input type="date" class="form-control" id="age" name="age" required>
         </div>
 
         <!-- Address Region -->
@@ -107,12 +131,6 @@
                 <option value="5">Form 5</option>
                 <option value="6">Form 6</option>
             </select>
-        </div>
-
-        <!-- Profile Photo Upload -->
-        <div class="form-group">
-            <label for="profilePhoto">Profile Photo</label>
-            <input type="file" class="form-control-file" id="profilePhoto" name="profile_photo" accept="image/*" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Register Student</button>

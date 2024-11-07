@@ -1,4 +1,8 @@
 <?php
+
+// Include database connection
+include('db_connection.php');
+
 // Get the registration_number from the URL
 $registration_number = isset($_GET['registration_number']) ? htmlspecialchars($_GET['registration_number']) : '';
 ?>
@@ -18,7 +22,7 @@ $registration_number = isset($_GET['registration_number']) ? htmlspecialchars($_
             <!-- Student ID -->
             <div class="form-group">
                 <!-- <label for="studentId">Student ID</label> -->
-                <input type="text" class="form-control" id="studentId" name="student_id" maxlength="20" value="<?php echo $registration_number; ?>" required>
+                <input type="hidden" class="form-control" id="studentId" name="student_id" maxlength="20" value="<?php echo $registration_number; ?>" required>
             </div>
 
             <!-- Other fields... -->

@@ -19,7 +19,9 @@ $staff_registration_number = isset($_GET['staff_registration_number']) ? htmlspe
         <h2>Register Staff Education</h2>
         <form action="register_education_process.php" method="POST" enctype="multipart/form-data">
             <!-- Staff ID (hidden) -->
-            <input type="hidden" name="staff_registration_number" value="<?php echo htmlspecialchars($staff_registration_number); ?>">
+            <!-- <input type="hidden" id="staff_registration_number" name="staff_registration_number" value="<?php echo htmlspecialchars($staff_registration_number); ?>"> -->
+            <input type="hidden" class="form-control" id="staff_registration_number" name="staff_registration_number" value="<?php echo $staff_registration_number; ?>">
+
 
             <!-- Primary Level -->
             <div class="form-group">

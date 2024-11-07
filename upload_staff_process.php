@@ -20,15 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $disorder_details = $_POST['disorder_details'];
     $phone = $_POST['phone'];
     $email = $_POST['email'];
-    $relationship = $_POST['relationship'];
     $marital_status = $_POST['marital_status'];
     $nida_number = $_POST['nida_number'];
     $role = $_POST['role'];
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Hash the password
-
-    // Handling file upload
-    $profile_photo = $_FILES['profile_photo']['tmp_name'];
-    $profile_photo_blob = file_get_contents($profile_photo);
 
     // Start transaction
     $conn->begin_transaction();
@@ -38,16 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query_staff = "INSERT INTO staff (
                         staff_registration_number, first_name, middle_name, surname, gender, age, 
                         address_region, address_district, address_ward, address_village, address_street, 
-                        alleges, disorder, disorder_details, phone, email, relationship, marital_status, nida_number, profile_photo
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        alleges, disorder, disorder_details, phone, email, marital_status, nida_number
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         // Prepare statement for staff
         if ($stmt_staff = $conn->prepare($query_staff)) {
             $stmt_staff->bind_param(
-                "sssssisssssiisisssib",
+                "sssssssssssiisissi",
                 $staff_registration_number, $first_name, $middle_name, $surname, $gender, $age,
                 $address_region, $address_district, $address_ward, $address_village, $address_street,
-                $alleges, $disorder, $disorder_details, $phone, $email, $relationship, $marital_status, $nida_number, $profile_photo_blob
+                $alleges, $disorder, $disorder_details, $phone, $email, $marital_status, $nida_number
             );
 
             if (!$stmt_staff->execute()) {
@@ -75,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->commit();
 
         // Redirect to success page
-        header("Location: register_staff_education.php");
+        header("Location: register_staff_education.php?staff_registration_number=" . urlencode($staff_registration_number));
         exit();
     } catch (Exception $e) {
         // Rollback transaction on error
@@ -84,9 +79,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Close statements
-    $stmt_staff->close();
-    $stmt_login->close();
+    if ($stmt_staff) {
+        $stmt_staff->close();
+    }
+    if ($stmt_login) {
+        $stmt_login->close();
+    }
 
     // Close the database connection
     $conn->close();
 }
+?>

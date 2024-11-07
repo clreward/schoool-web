@@ -42,10 +42,7 @@
                 <p>Registration Number</p>
                 <hr>
                 <a href="register_student.html">Register Student</a>
-                <a href="register_parent.html">Register Parent</a>
                 <a href="upload_staff.html">Register Staff</a>
-                <a href="#nextOfKin">Register Next of Kin</a>
-                <a href="#staffEducation">Staff Education Info</a>
                 <a href="view_student.php">View Students</a>
                 <a href="view_staff.php">View Staff</a>
                 <a href="#logout">Logout</a>

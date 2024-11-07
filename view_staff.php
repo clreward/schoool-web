@@ -58,7 +58,7 @@ $result = $conn->query($query);
                             <a href="view_staff_details.php?staff_id=<?php echo $row['staff_id']; ?>">View More</a>
                             <a href="view_education.php?staff_registration_number=<?php echo urlencode(htmlspecialchars($row['staff_registration_number'])); ?>" class="btn btn-secondary">View Education</a>
 
-                            <a href="update_staff.php?staff_id=<?php echo $row['staff_id']; ?>">Update</a>
+                            <a href="update_staff.php?staff_registration_number=<?php echo $row['staff_registration_number']; ?>">Update</a>
                             <a href="delete_staff.php?staff_id=<?php echo $row['staff_id']; ?>" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
                         </td>
                     </tr>
