@@ -141,14 +141,16 @@ $base64_image = base64_encode($image_data);
             <a href="academic_view_teachers.php">View Teachers</a>
             <a href="academic_view_teacher_assignments.php">View Teachers Assignments</a>
             <a href="result_notification.php">Result Notification</a>
-            <!-- <a href="view_results.php">View Uploaded Results</a> -->
+            <a href="assign_classteacher.php">assign class teacher</a>
             <a href="view_form_results.php">View Results</a>
+            <a href="uploading_result.php">View division</a>
             <a href="#">Upload Results</a>
             <a href="#">View Permitted Students</a>
         <?php } elseif ($role == 'Teacher') { ?>
             <a href="teacher_view_assignments.php">View Assigned Classes</a>
             <a href="teacher_add_marks.php">Add Marks</a>
             <a href="edit_marks.php">Edit Marks</a>
+            <a href="teacher_view_assignedclass.php">class teacher</a>
             <!-- Add more Teacher options -->
         <?php } elseif ($role == 'Treasurer') { ?>
             <a href="view_payments.php">View Payments</a>

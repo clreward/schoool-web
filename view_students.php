@@ -9,8 +9,11 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSI
     exit;
 }
 
-// Fetch student details from the single students table
-$query = "SELECT * FROM students";
+// Check if a form is selected, default to form 1 if not
+$form_level = isset($_GET['form']) ? (int)$_GET['form'] : 1;
+
+// Fetch students from the database based on the selected form level
+$query = "SELECT * FROM students WHERE form = {$form_level}";
 $result = $conn->query($query);
 
 // Check if the query was successful
@@ -21,11 +24,7 @@ if (!$result) {
 // Fetch students by form level
 $students_by_form = [];
 while ($row = $result->fetch_assoc()) {
-    $form = $row['form'];
-    if (!isset($students_by_form[$form])) {
-        $students_by_form[$form] = [];
-    }
-    $students_by_form[$form][] = $row;
+    $students_by_form[] = $row;
 }
 
 ?>
@@ -48,43 +47,63 @@ while ($row = $result->fetch_assoc()) {
             padding: 8px;
             text-align: left;
         }
+        .menu a {
+            padding: 10px 20px;
+            margin-right: 10px;
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        .menu a:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
 
     <h1>Student List</h1>
 
-    <?php foreach (range(1, 6) as $form_level): ?>
-        <h2>Form <?php echo $form_level; ?> Students</h2>
-        <?php if (isset($students_by_form[$form_level]) && count($students_by_form[$form_level]) > 0): ?>
-            <table>
-                <thead>
+    <!-- Menu for form selection -->
+    <div class="menu">
+        <a href="?form=1">Form 1</a>
+        <a href="?form=2">Form 2</a>
+        <a href="?form=3">Form 3</a>
+        <a href="?form=4">Form 4</a>
+        <a href="?form=5">Form 5</a>
+        <a href="?form=6">Form 6</a>
+    </div>
+
+    <h2>Form <?php echo $form_level; ?> Students</h2>
+
+    <?php if (count($students_by_form) > 0): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Registration Number</th>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Surname</th>
+                    <th>Gender</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($students_by_form as $row): ?>
                     <tr>
-                        <th>Registration Number</th>
-                        <th>First Name</th>
-                        <th>Middle Name</th>
-                        <th>Surname</th>
-                        <th>Gender</th>
-                        <th>Actions</th>
+                        <td><?php echo htmlspecialchars($row['registration_number']); ?></td>
+                        <td><?php echo htmlspecialchars($row['first_name']); ?></td>
+                        <td><?php echo htmlspecialchars($row['middle_name']); ?></td>
+                        <td><?php echo htmlspecialchars($row['surname']); ?></td>
+                        <td><?php echo htmlspecialchars($row['gender']); ?></td>
+                        <td><a href="manage_subjects.php?registration_number=<?php echo htmlspecialchars($row['registration_number']); ?>">Manage Subjects</a></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($students_by_form[$form_level] as $row): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['registration_number']); ?></td>
-                            <td><?php echo htmlspecialchars($row['first_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['middle_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['surname']); ?></td>
-                            <td><?php echo htmlspecialchars($row['gender']); ?></td>
-                            <td><a href="manage_subjects.php?registration_number=<?php echo htmlspecialchars($row['registration_number']); ?>">Manage Subjects</a></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else: ?>
-            <p>No students found in Form <?php echo $form_level; ?>.</p>
-        <?php endif; ?>
-    <?php endforeach; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>No students found in Form <?php echo $form_level; ?>.</p>
+    <?php endif; ?>
 
 </body>
 </html>
