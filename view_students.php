@@ -36,16 +36,34 @@ while ($row = $result->fetch_assoc()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Students</title>
     <style>
-        /* Add styles for the table */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
         table {
-            margin-bottom: 20px;
+            margin: 20px auto;
             border-collapse: collapse;
-            width: 100%;
+            width: 90%;
+            background-color: white;
         }
         th, td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .menu {
+            margin: 20px auto;
+            text-align: center;
         }
         .menu a {
             padding: 10px 20px;
@@ -58,14 +76,24 @@ while ($row = $result->fetch_assoc()) {
         .menu a:hover {
             background-color: #45a049;
         }
+        .footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Student List</h1>
+    <div class="header">
+        <h1>View Students</h1>
+    </div>
 
     <!-- Menu for form selection -->
     <div class="menu">
+        <a href="academic_dashboard.php">Go Home</a>
         <a href="?form=1">Form 1</a>
         <a href="?form=2">Form 2</a>
         <a href="?form=3">Form 3</a>
@@ -74,7 +102,7 @@ while ($row = $result->fetch_assoc()) {
         <a href="?form=6">Form 6</a>
     </div>
 
-    <h2>Form <?php echo $form_level; ?> Students</h2>
+    <h2 style="text-align: center;">Form <?php echo $form_level; ?> Students</h2>
 
     <?php if (count($students_by_form) > 0): ?>
         <table>
@@ -102,8 +130,12 @@ while ($row = $result->fetch_assoc()) {
             </tbody>
         </table>
     <?php else: ?>
-        <p>No students found in Form <?php echo $form_level; ?>.</p>
+        <p style="text-align: center;">No students found in Form <?php echo $form_level; ?>.</p>
     <?php endif; ?>
+
+    <div class="footer">
+        <p>© 2024 All Rights Reserved | Designed by Clifford</p>
+    </div>
 
 </body>
 </html>

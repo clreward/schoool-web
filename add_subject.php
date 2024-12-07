@@ -4,108 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Subjects</title>
+    <style>
+        body {
+            background-color: rgb(240, 240, 240);
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .content h2, .content h3 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"], .home-btn {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover, .home-btn:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            margin-top: 20px;
+            padding: 10px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 14px;
+        }
+        .message {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Manage Subjects</h2>
+    <!-- Header -->
+    <div class="header">
+        <h1>Manage Subjects</h1>
+    </div>
 
-    <!-- Form to Add Subject -->
-    <h3>Add Subject</h3>
-    <form action="" method="post">
-        <label for="subject_name">Subject Name:</label><br>
-        <input type="text" id="subject_name" name="subject_name" required><br><br>
-        <input type="submit" name="add_subject" value="Add Subject">
-    </form>
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Go Home Button -->
+        <a href="academic_dashboard.php" class="home-btn">Go Home</a>
 
-    <!-- Form to Delete Subject -->
-    <h3>Delete Subject</h3>
-    <form action="" method="post">
-        <label for="subject_id">Select Subject to Delete:</label><br>
-        <select id="subject_id" name="subject_id" required>
-            <option value="">--Select Subject--</option>
-            <?php
-            // Database connection
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "school_management_system";
+        <h2>Manage Subjects</h2>
 
-            $conn = new mysqli($servername, $username, $password, $dbname);
+        <!-- Form to Add Subject -->
+        <h3>Add Subject</h3>
+        <form action="" method="post">
+            <label for="subject_name">Subject Name:</label>
+            <input type="text" id="subject_name" name="subject_name" required>
+            <input type="submit" name="add_subject" value="Add Subject">
+        </form>
 
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
+        <!-- Form to Delete Subject -->
+        <h3>Delete Subject</h3>
+        <form action="" method="post">
+            <label for="subject_id">Select Subject to Delete:</label>
+            <select id="subject_id" name="subject_id" required>
+                <option value="">--Select Subject--</option>
+                <?php
+                // Database connection
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "school_management_system";
 
-            // Fetch subjects for the dropdown
-            $sql = "SELECT subject_id, subject_name FROM subjects";
-            $result = $conn->query($sql);
+                $conn = new mysqli($servername, $username, $password, $dbname);
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='" . $row['subject_id'] . "'>" . $row['subject_name'] . "</option>";
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
                 }
-            } else {
-                echo "<option value=''>No subjects available</option>";
-            }
 
-            $conn->close();
-            ?>
-        </select><br><br>
-        <input type="submit" name="delete_subject" value="Delete Subject">
-    </form>
+                // Fetch subjects for the dropdown
+                $sql = "SELECT subject_id, subject_name FROM subjects";
+                $result = $conn->query($sql);
 
-    <?php
-    // Database connection parameters
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "school_management_system";
-
-    // Add Subject Logic
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_subject'])) {
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        // Retrieve the subject name
-        $subject_name = trim($_POST['subject_name']);
-
-        // Check if the subject already exists
-        $check_query = $conn->prepare("SELECT COUNT(*) FROM subjects WHERE subject_name = ?");
-        $check_query->bind_param("s", $subject_name);
-        $check_query->execute();
-        $check_query->bind_result($count);
-        $check_query->fetch();
-        $check_query->close();
-
-        if ($count > 0) {
-            echo "Subject '$subject_name' already exists in the database.<br>";
-        } else {
-            // Apply the subject to all forms (1 to 6)
-            $forms = [1, 2, 3, 4, 5, 6];
-
-            foreach ($forms as $form) {
-                $stmt = $conn->prepare("INSERT INTO subjects (subject_name, form) VALUES (?, ?)");
-                $stmt->bind_param("si", $subject_name, $form);
-
-                if ($stmt->execute()) {
-                    echo "Subject '$subject_name' successfully added to Form $form.<br>";
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row['subject_id'] . "'>" . $row['subject_name'] . "</option>";
+                    }
                 } else {
-                    echo "Error adding subject '$subject_name' to Form $form: " . $stmt->error . "<br>";
+                    echo "<option value=''>No subjects available</option>";
                 }
 
-                $stmt->close();
-            }
-        }
+                $conn->close();
+                ?>
+            </select>
+            <input type="submit" name="delete_subject" value="Delete Subject">
+        </form>
 
-        $conn->close();
-    }
-
-    // Delete Subject Logic
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_subject'])) {
+        <?php
+        // Database connection
         $conn = new mysqli($servername, $username, $password, $dbname);
 
         // Check connection
@@ -113,22 +144,48 @@
             die("Connection failed: " . $conn->connect_error);
         }
 
-        // Get the selected subject ID
-        $subject_id = $_POST['subject_id'];
+        // Add Subject logic
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['add_subject'])) {
+                $subject_name = $conn->real_escape_string($_POST['subject_name']);
 
-        // Delete the subject
-        $stmt = $conn->prepare("DELETE FROM subjects WHERE subject_id = ?");
-        $stmt->bind_param("i", $subject_id);
+                // Array of all forms (1, 2, 3, 4)
+                $forms = [1, 2, 3, 4];
 
-        if ($stmt->execute()) {
-            echo "Subject deleted successfully!<br>";
-        } else {
-            echo "Error deleting subject: " . $stmt->error . "<br>";
+                // Insert the subject for each form
+                foreach ($forms as $form) {
+                    $add_subject_sql = "INSERT INTO subjects (subject_name, form) VALUES ('$subject_name', $form)";
+                    if ($conn->query($add_subject_sql) !== TRUE) {
+                        echo "<div class='message'>Error adding subject: " . $conn->error . "</div>";
+                        break;
+                    }
+                }
+
+                // If all inserts succeed, show success message
+                echo "<div class='message'>Subject added successfully to all forms!</div>";
+            }
+
+            // Delete Subject logic
+            if (isset($_POST['delete_subject'])) {
+                $subject_id = $_POST['subject_id'];
+
+                // Delete the subject from the database
+                $delete_subject_sql = "DELETE FROM subjects WHERE subject_id = $subject_id";
+                if ($conn->query($delete_subject_sql) === TRUE) {
+                    echo "<div class='message'>Subject deleted successfully!</div>";
+                } else {
+                    echo "<div class='message'>Error deleting subject: " . $conn->error . "</div>";
+                }
+            }
         }
 
-        $stmt->close();
         $conn->close();
-    }
-    ?>
+        ?>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 All rights reserved. Designed by Clifford.</p>
+    </div>
 </body>
 </html>

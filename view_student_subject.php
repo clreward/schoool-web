@@ -20,18 +20,9 @@
             padding: 10px;
             text-align: left;
         }
-        .assign-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-        }
-        .assign-btn:hover {
-            background-color: #45a049;
-        }
         .menu {
             margin-bottom: 20px;
+            text-align: center;
         }
         .menu a {
             padding: 10px 20px;
@@ -44,13 +35,51 @@
         .menu a:hover {
             background-color: #45a049;
         }
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .header img {
+            width: 50px;
+            height: auto;
+            vertical-align: middle;
+        }
+        .header p {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .footer {
+            margin-top: 20px;
+            padding: 10px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 14px;
+        }
+        h2 {
+            text-align: center;
+            color: #333; /* Optional: Set a color for better visibility */
+        }
+        p {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <h1>Students Subjects</h1>
+    <!-- Header -->
+    <div class="header">
+        <h1>Students Subjects</h1>
+        <!-- <p><img src="school_logo.png" alt="School Logo"> Your School Name</p> -->
+    </div>
 
     <!-- Menu for form selection -->
     <div class="menu">
+        <a href="academic_dashboard.php" class="home-btn">Go Home</a>
         <a href="?form=1">Form 1</a>
         <a href="?form=2">Form 2</a>
         <a href="?form=3">Form 3</a>
@@ -60,20 +89,16 @@
     </div>
 
     <?php
-    // Include necessary files and initialize session
     include('db_connection.php');
     session_start();
 
-    // Check if the user is logged in and has the Academic role
     if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['role'] !== 'Academic') {
         header("Location: login.php");
         exit;
     }
 
-    // Check if a form is selected, default to form 1 if not
     $form_level = isset($_GET['form']) ? (int)$_GET['form'] : 1;
 
-    // Query to get all students in the selected form level
     $student_query = "
         SELECT registration_number, first_name, middle_name, surname, gender
         FROM students 
@@ -88,10 +113,8 @@
         echo "<thead><tr><th>S/N</th><th>Registration Number</th><th>Names</th><th>Gender</th><th>Subjects</th></tr></thead>";
         echo "<tbody>";
 
-        // Fetch each student in the selected form level
         $count = 1;
         while ($student = $student_result->fetch_assoc()) {
-            // Get subjects for the current form level
             $subject_query = "
                 SELECT sub.subject_name
                 FROM subjects sub
@@ -100,26 +123,11 @@
 
             $subject_result = $conn->query($subject_query);
 
-            // Store subjects in an array
             $subjects = [];
             while ($subject = $subject_result->fetch_assoc()) {
                 $subjects[] = $subject['subject_name'];
-                
-                // Check if the subject is already assigned to the student
-                $check_query = "SELECT 1 FROM student_subjects WHERE student_id = ? AND subject_id = ?";
-                $stmt = $conn->prepare($check_query);
-                $stmt->bind_param("si", $student['registration_number'], $subject['subject_id']);
-                $stmt->execute();
-                if ($stmt->get_result()->num_rows === 0) {
-                    // Insert subject if not already assigned
-                    $insert_query = "INSERT INTO student_subjects (student_id, subject_id) VALUES (?, ?)";
-                    $stmt = $conn->prepare($insert_query);
-                    $stmt->bind_param("si", $student['registration_number'], $subject['subject_id']);
-                    $stmt->execute();
-                }
             }
 
-            // Display student details and subjects
             echo "<tr>";
             echo "<td>" . $count++ . "</td>";
             echo "<td>" . htmlspecialchars($student['registration_number']) . "</td>";
@@ -134,9 +142,12 @@
         echo "<p>No students found in Form {$form_level}.</p>";
     }
 
-    // Close database connection
     $conn->close();
     ?>
 
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 All rights reserved. Designed by Clifford.</p>
+    </div>
 </body>
 </html>
