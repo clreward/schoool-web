@@ -48,7 +48,7 @@ $staff_registration_number = isset($_GET['staff_registration_number']) ? htmlspe
                 </select>
             </div>
 
-            <!-- Age of the student -->
+            <!-- Age of the student. -->
             <div class="form-group">
                 <label for="age">Date of Birth</label>
                 <input type="date" class="form-control" id="age" name="age" required>
