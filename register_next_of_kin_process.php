@@ -30,8 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt = $conn->prepare($query)) {
         // Bind parameters
         $stmt->bind_param(
-            "sssssssssssssss",
-            $staff_registration_number, $first_name, $middle_name, $surname, $gender, $age, $address_region, $address_ward,
+            "sssssssssssssss", $staff_registration_number, $first_name, $middle_name, $surname, $gender, $age, $address_region, $address_ward,
             $address_village, $address_street, $phone, $email, $relationship, $marital_status, $nida_number
         );
 
