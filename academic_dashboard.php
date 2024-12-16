@@ -9,7 +9,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
-// Fetch user details
+// Fetch user details from the database
 $user_id = $_SESSION['user_id'];
 $query = "SELECT first_name, middle_name, surname, staff_registration_number,  profile_photo FROM staff WHERE staff_registration_number = ?";
 
@@ -19,7 +19,7 @@ $stmt = $conn->prepare($query);
 if ($stmt === false) {
     die("Failed to prepare the SQL statement: " . $conn->error);
 }
-
+// Check if the dataare associated
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
